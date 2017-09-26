@@ -1,4 +1,4 @@
-  <script>
+<script>
 function closeAll() {
     document.getElementById('js-overlay').classList.remove('js-active');
     document.getElementById('js-lock-body').classList.remove('js-active');
@@ -23,7 +23,8 @@ function ready(event) {
         element.classList.toggle('js-active');
     }
 
-    function toggleCard() {
+    function toggleCard(event) {
+        event.preventDefault();
         this.parentNode.classList.toggle('js-active')
             document.getElementById('js-overlay').classList.toggle('js-active');
         document.getElementById('js-lock-body').classList.toggle('js-active');
@@ -62,4 +63,4 @@ document.onkeydown = function(evt) {
         closeAll()
     }
 };
-  </script>
+</script>

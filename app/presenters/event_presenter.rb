@@ -40,8 +40,7 @@ class EventPresenter
   end
 
   def more_description
-    @object.short_description
-
+    auto_link(simple_format(@object.short_description))
   end
 
   def fb_tags
@@ -104,6 +103,10 @@ class EventPresenter
 
   def fb_tag(type, content)
     tag 'meta', { property: "og:#{type}", content: content }, true
+  end
+
+  def ics_link
+    link_to(t('events.event.download_ics'), event_path(@object, format=:ics))
   end
 
   private

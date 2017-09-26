@@ -1,4 +1,4 @@
-<div class="card" href="#">
+<div class="card">
     <div class="card__layout">
         <div class="card__media">
             <%= presenter.picture_tag %>
@@ -11,19 +11,18 @@
                 <div class="card__place">
                     <%= presenter.location %>
                 </div>
+                <div class="card__util">
+                    <%= presenter.ics_link %>
+                </div>
             </div>
             <div class="card__main">
                 <h1 class="card__title">
                     <%= presenter.title %>
                 </h1>
-                <%= presenter.teaser %>
-                <div class="card__more">
-                    <%= presenter.more_description %>
-                </div>
+                <%= presenter.more_description %>
             </div>
         </div>
     </div>
-    <%= link_to('', event_path(presenter.object), class: "card__toggle js-toggle-card") %>
 </div>
 
 
