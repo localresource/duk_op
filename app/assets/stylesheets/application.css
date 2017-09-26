@@ -179,6 +179,7 @@ img {
   overflow: scroll;
 }
 
+.location-card,
 .card {
   display: block;
   color: #444;
@@ -244,6 +245,15 @@ img {
   letter-spacing: -1px;
 }
 
+.location-card h1 {
+    font-size: 1.5em;
+    color: #00BF91;
+}
+.location-card h2 {
+  color: #00BFC8;
+  margin-top: 5px;
+}
+
 .card__place {
   color: #00BFC8;
   margin-top: 5px;
@@ -292,6 +302,13 @@ img {
 .card.js-active .card__more > div {
   flex: 1;
 }
+
+.card__link a {
+    text-decoration: none;
+    color: inherit
+}
+.card__link a:hover { text-decoration: underline; }
+
 
 
 

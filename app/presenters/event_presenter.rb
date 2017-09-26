@@ -16,7 +16,7 @@ class EventPresenter
   end
 
   def location
-    @object.location.display_name
+    link_to(@object.location.display_name, @object.location)
   end
 
   def time

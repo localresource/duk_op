@@ -1,4 +1,4 @@
-<div class="card" href="#">
+<div class="card">
     <div class="card__layout">
         <div class="card__media">
             <%= presenter.picture_tag %>
@@ -8,8 +8,11 @@
                 <div class="card__date">
                     <%= presenter.date %>
                 </div>
-                <div class="card__place">
+                <div class="card__place card__link">
                     <%= presenter.location %>
+                </div>
+                <div class="card__util card__link card__more">
+                    <%= presenter.ics_link %>
                 </div>
             </div>
             <div class="card__main">
