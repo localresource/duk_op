@@ -603,7 +603,7 @@ input[type="file"] {
 
 @media (min-width: 700px){
   body {
-    background: linear-gradient(-180deg, rgba(236, 236, 222,.8) 0%, rgba(177, 196, 181,.8) 100%), url('assets/images/bg.jpg') top right -300px no-repeat;
+    background: linear-gradient(-180deg, rgba(236, 236, 222,.8) 0%, rgba(177, 196, 181,.8) 100%), url('/images/bg.jpg') top right -300px no-repeat;
   }
 
   .header__controls {
