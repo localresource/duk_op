@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :set_posts
 
   after_action :track
-  layout 'remake'
 
   def self.default_url_options(options={})
     { locale: I18n.locale }

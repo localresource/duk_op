@@ -421,23 +421,23 @@ img {
   border-left: 1px solid #666;
 }
 
-.create-form {
+.generic-form, .create-form {
   background: #FFFFFF;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
   padding: 20px;
   margin-top: 20px;
 }
 
-.create-form__row {
+.generic-form__row, .create-form__row {
   display: flex;
   margin-top: 20px;
 }
 
-.create-form__row > div {
+.generic-form__row > div, .create-form__row > div {
   flex: 1;
 }
 
-.create-form__label {
+.generic-form__label, .create-form__label {
   flex: 0 0 100px;
   color: #aaa;
   font-style: italic;
@@ -445,7 +445,7 @@ img {
   font-weight: 100;
 }
 
-.create-form__label abbr {
+.generic-form__label abbr, .create-form__label abbr {
   text-decoration: none;
   color: red;
   vertical-align: super;
@@ -508,7 +508,7 @@ input[type="file"] {
   -webkit-appearance: none;
 }
 
-.create-form__submit {
+.generic-form__submit, .create-form__submit {
   cursor: pointer;
   display: inline-block;
   background-color: #42767F;
