@@ -1,55 +1,34 @@
 <%= simple_form_for @event, html: { multipart: true } do |f| %>
 
 
-<div class="row">
-  <div class="col-xs-12">
     <%= f.input :title %>
-  </div>
-</div>
-<% if @event.persisted? %>
-<div class="row">
-  <div class="col-xs-12">
-    <%= f.input :cancelled, wrapper_html: { class: 'checkbox' },
-    input_html: { class: 'checkbox'}, label_html: { class: 'override'} %>
-  </div>
-</div>
-<% end %>
+    <%= f.input :cancelled if @event.persisted? %>
 
-<div class="row">
-  <div class="col-xs-12">
-    <%= f.label :picture %>
-    <span class="btn btn-default btn-file">
-      <span id="js_button_text">
+<div class="create-form__row">
+    <%= f.label :picture, class: 'create-form__label' %>
+    <div>
+    <label id="js_button_text" class="create-form__file" for="event_picture">
         <%# show the filename in the button if there is a file %>
         <% if @event.picture.present? %>
-        <%= @event.picture.original_filename %>
+            <%= @event.picture.original_filename %>
         <% else %>
-        <%= t '.choose_file' %>
+            <%= t '.choose_file' %>
         <% end %>
-      </span>
+    </label>
       <%= f.input :picture, label: false %>
-    </span>
     <%= bootstrap_glyphicon('trash', 'btn btn-default') if @event.picture.present? %>
     <input type="hidden" name="remove_picture" id="event_remove_picture"/>
-    <br/>
-    <br/>
-    <%= f.hint t('.picture.warning'), data: { role: 'picture_warning' } %>
-  </div>
+    <%= f.hint t('.picture.warning'), class: 'create-form__info', data: { role: 'picture_warning' } %>
+    </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <%= f.input :short_description %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-5">
-    <%= f.association :categories, label_method: ->(obj){ obj.send(t(:language)).titleize }, required: true,
-    input_html: { class: 'selectpicker', title: t('.choose_category') }
-    %>
-  </div>
-  <div class="col-xs-12 col-sm-5 col-sm-offset-1">
-    <%= f.label :location_id %>
+<%= f.input :short_description %>
+<%= f.association :categories, label_method: ->(obj){ obj.send(t(:language)).titleize }, required: true,
+    input_html: { class: 'selectpicker', title: t('.choose_category') },
+    wrapper_html: { class: 'create-form__select-list' }
+%>
+<div class="create-form__row">
+    <%= f.label :location_id, class: 'create-form__label' %>
     <%# If we already have a location the placeholder should be that location's name %>
     <% location_name = @event.location.display_name rescue nil %>
     <%= text_field_tag(
@@ -83,13 +62,12 @@
 
         <%= f.input :location_id, as: :hidden %>
 
-      </div>
     </div>
 
     <%# This dialog is only for new events %>
     <% unless @event.persisted? %>
       <div id='check_recurring' class="checkbox">
-        <label>
+        <label class='create-form__label'>
           <%= check_box_tag :recurring, 'yes', false,
           data: { function: 'show', target: '#repeating_control', hide: '#standard_time_control' }
           %>
@@ -97,7 +75,7 @@
         </label>
       </div>
 
-      <div id="repeating_control" class='form-inline row-fluid' style="display: none;">
+      <div id="repeating_control" class='create-form__row' style="display: none;">
         <h2><%= t 'event_series.form.repetition_header' %></h2>
         <%= f.simple_fields_for :event_series do |s| %>
          <%= render partial: 'event_series/repeating_control', locals: { builder: s,  coming_events: false } %>
@@ -106,23 +84,17 @@
     <% end %>
 
 
-     <div id="standard_time_control" class="row">
       <%= f.input :start_time, start_year: Date.today.year, end_year: Date.today.year + 1, minute_step: 15 %>
       <%= f.input :end_time, start_year: Date.today.year, end_year: Date.today.year + 1, minute_step: 15 %>
-      </div>
 
-     <div class="row">
-      <div class="col-xs-12">
-        <%= f.input :link, as: :url %>
-      </div>
-    </div>
+      <%= f.input :link, as: :url %>
 
     <%# event price field should only be shown a) if there is already a price
     or b) if the user has checked this box to say that there is a price
     Note the javascript hooks on the data elements. %>
     <% if @event.price.blank? %>
     <div class="input boolean optional event_price_enabled checkbox">
-      <label class="boolean optional control-label override checkbox" for="event_price_enabled">
+      <label class="create-form__label" for="event_price_enabled">
         <input class="boolean optional checkbox" id="event_price_enabled"
         name="event[price_enabled]" value="1" type="checkbox"
         data-function="show" data-target=".event_price">
@@ -133,27 +105,27 @@
 
     <% if current_user.is_admin? %>
     <div class="input boolean optional checkbox">
-      <label class="boolean optional control-label override checkbox" for="event_featured">
+      <label class="create-form__label" for="event_featured">
       <%= f.input_field :featured, boolean_style: :inline, class: 'checkbox no-form-control' %>
       <%= t '.feature_event?' %>
       </label>
     </div>
     <% end %>
 
-    <div class="row">
+    <div class="create-form__row">
       <div class="col-xs-12">
         <% visibility =  @event.price.present? ? 'block' : 'none' %>
         <%= f.input :price, wrapper_html: { style: "display: #{visibility}"} %>
       </div>
     </div>
-    <div class="input boolean optional event_comments_enabled checkbox">
-      <label class="boolean optional control-label override checkbox" for="event_comments_enabled">
+    <div class="create-form__row">
+      <label class="create-form__label" for="event_comments_enabled">
         <%= f.input_field :comments_enabled, boolean_style: :inline, class: 'checkbox no-form-control' %>
         <%= t 'simple_form.labels.defaults.comments_enabled' %>
       </label>
     </div>
-    <div class="input boolean optional checkbox">
-      <label class="boolean optional control-label override checkbox" for="event_published">
+    <div class="create-form__row">
+      <label class="create-form__label" for="event_published">
         <%= f.input_field :published, boolean_style: :inline, class: 'checkbox no-form-control' %>
         <%= t 'simple_form.labels.defaults.published' %>
       </label>
@@ -162,9 +134,9 @@
       </span>
     </div>
     <br/>
-    <div class="row">
+    <div class="create-form__row">
       <div class="col-xs-12">
-        <%= f.button :submit, class: 'btn btn-primary' %>
+        <%= f.button :submit, class: '' %>
       </div>
     </div>
     <br/>
