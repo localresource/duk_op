@@ -1,4 +1,4 @@
-<%= simple_form_for @event, html: { multipart: true } do |f| %>
+<%= simple_form_for @event, html: { multipart: true, name: 'createForm' } do |f| %>
 
 
     <%= f.input :title %>
@@ -24,29 +24,18 @@
 
 <%= f.input :short_description %>
 <%= f.association :categories, label_method: ->(obj){ obj.send(t(:language)).titleize }, required: true,
-    input_html: { class: 'selectpicker', title: t('.choose_category') },
+    input_html: { class: 'selectpicker', title: t('.choose_category'), name: 'selectList' },
     wrapper_html: { class: 'create-form__select-list' }
 %>
-<div class="create-form__row">
-    <%= f.label :location_id, class: 'create-form__label' %>
-    <%# If we already have a location the placeholder should be that location's name %>
-    <% location_name = @event.location.display_name rescue nil %>
-    <%= text_field_tag(
-      'location-typeahead', location_name,
-      placeholder: "#{location_name || t('.choose_location')}",
-      class: "typeahead form-control",
-        data: {
-          api_path: locations_path,
-          remote_path: new_location_path,
-          label: t('.create_location'),
-          display_key: 'display_name',
-          header: t('.typeahead_header'),
-          target: '#event_location_id',
-          empty_message: t('.empty_location')
-        }
-        )
-        %>
-        <%= f.full_error :location_id %>
+<label class="create-form__label">
+    <%= t 'events.form.new_location_title' %>
+    <input list="locations" name="location" class="create-form__input"/>
+</label>
+    <datalist id="locations">
+    <% Location.all.each do |loc| %>
+        <%= content_tag(:option, loc.name, value: loc.id) %>
+    <% end %>
+    </datalist>
         <%= link_to new_location_path, class: 'btn btn-default btn-sm pull-right',
         data: {
           remote: true,
@@ -56,13 +45,10 @@
           update_field: 'event[location_id]',
           modal_title: t('.new_location_title')
         } do %>
-        <%= t('.create_location') %>
-        <%= bootstrap_glyphicon('plus') %>
+            <%= t('.create_location') %>
         <% end %>
 
-        <%= f.input :location_id, as: :hidden %>
 
-    </div>
 
     <%# This dialog is only for new events %>
     <% unless @event.persisted? %>
@@ -92,37 +78,30 @@
     <%# event price field should only be shown a) if there is already a price
     or b) if the user has checked this box to say that there is a price
     Note the javascript hooks on the data elements. %>
+    <div class="create-form__row">
     <% if @event.price.blank? %>
-    <div class="input boolean optional event_price_enabled checkbox">
-      <label class="create-form__label" for="event_price_enabled">
-        <input class="boolean optional checkbox" id="event_price_enabled"
-        name="event[price_enabled]" value="1" type="checkbox"
+        <input id="priceCheck" name="event[price_enabled]" value="1" type="checkbox"
         data-function="show" data-target=".event_price">
-        <%= t '.enable_price' %>
-      </label>
-    </div>
+        <label><%= t '.enable_price' %></label>
     <% end %>
+    <% visibility =  @event.price.present? ? 'block' : 'none' %>
+    <div>
+        <input class="create-form__input" style="display: <%= visibility %>;" placeholder="Hvor meget koster det?" name="event[price]" id="priceInput" type="text">
+    </div>
+    </div>
 
     <% if current_user.is_admin? %>
-    <div class="input boolean optional checkbox">
-      <label class="create-form__label" for="event_featured">
-      <%= f.input_field :featured, boolean_style: :inline, class: 'checkbox no-form-control' %>
-      <%= t '.feature_event?' %>
-      </label>
-    </div>
+        <div class="input boolean optional checkbox">
+            <label class="create-form__label" for="event_featured">
+                <%= f.input_field :featured, boolean_style: :inline, class: 'checkbox no-form-control' %>
+                <%= t '.feature_event?' %>
+            </label>
+        </div>
     <% end %>
 
     <div class="create-form__row">
-      <div class="col-xs-12">
-        <% visibility =  @event.price.present? ? 'block' : 'none' %>
-        <%= f.input :price, wrapper_html: { style: "display: #{visibility}"} %>
-      </div>
-    </div>
-    <div class="create-form__row">
-      <label class="create-form__label" for="event_comments_enabled">
         <%= f.input_field :comments_enabled, boolean_style: :inline, class: 'checkbox no-form-control' %>
-        <%= t 'simple_form.labels.defaults.comments_enabled' %>
-      </label>
+        <%= label_tag t('simple_form.labels.defaults.comments_enabled') %>
     </div>
     <div class="create-form__row">
       <label class="create-form__label" for="event_published">
@@ -142,3 +121,4 @@
     <br/>
     <% end %>
     <%= render partial: 'layouts/modal_wrapper' %>
+    <%= render partial: 'form_js' %>
