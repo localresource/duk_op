@@ -84,28 +84,28 @@
         data-function="show" data-target=".event_price">
         <label><%= t '.enable_price' %></label>
     <% end %>
+    </div>
     <% visibility =  @event.price.present? ? 'block' : 'none' %>
     <div>
         <input class="create-form__input" style="display: <%= visibility %>;" placeholder="Hvor meget koster det?" name="event[price]" id="priceInput" type="text">
     </div>
-    </div>
 
     <% if current_user.is_admin? %>
-        <div class="input boolean optional checkbox">
+        <div class="create-form__row">
+            <%= f.input_field :featured, class: '' %>
             <label class="create-form__label" for="event_featured">
-                <%= f.input_field :featured, boolean_style: :inline, class: 'checkbox no-form-control' %>
                 <%= t '.feature_event?' %>
             </label>
         </div>
     <% end %>
 
     <div class="create-form__row">
-        <%= f.input_field :comments_enabled, boolean_style: :inline, class: 'checkbox no-form-control' %>
+        <%= f.input_field :comments_enabled, class: '' %>
         <%= label_tag t('simple_form.labels.defaults.comments_enabled') %>
     </div>
     <div class="create-form__row">
+      <%= f.input_field :published, class: '' %>
       <label class="create-form__label" for="event_published">
-        <%= f.input_field :published, boolean_style: :inline, class: 'checkbox no-form-control' %>
         <%= t 'simple_form.labels.defaults.published' %>
       </label>
       <span class="text-info">
