@@ -23,6 +23,16 @@ class Event < ActiveRecord::Base
   scope :unpublished, -> { future.where(published: false).ordered }
   scope :coming, -> { future.published.ordered }
 
+  before_validation :fix_link
+
+  def fix_link
+    if self.link?
+      unless self.link[/^https?:\/\//]
+        self.link = "http://" + self.link
+      end
+    end
+  end
+  
   def must_be_valid_duration
     return unless end_time.present? && start_time.present?
     unless end_time > start_time

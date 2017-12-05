@@ -81,6 +81,15 @@ describe Event do
     expect(e.link).to eql 'http://example.com'
   end
 
+  it 'should not have invalid link' do
+    e = Event.new(@party_details)
+    e.link = 'example.com'
+    e.save
+    e.reload
+    expect(e.link).to eql 'http://example.com'
+    expect(e.valid?).to be true
+  end
+
   describe 'highlights' do
     before do
       @featured_event = FactoryGirl.create(:featured_event, start_time: DateTime.now + 40.minutes)
