@@ -75,9 +75,11 @@ describe Event do
     expect([tomorrow, today].sort.first).to eql today
   end
 
-  it 'has a link field' do
-    e = Event.new
+  it 'valid link remains valid' do
+    e = Event.new(@party_details)
     e.link = 'http://example.com'
+    e.save
+    e.reload
     expect(e.link).to eql 'http://example.com'
   end
 
