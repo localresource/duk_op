@@ -35,6 +35,9 @@ describe EventPresenter, type: :view do
         e = FactoryGirl.create(:event)
         e.short_description = content
         e
+        it 'has a teaser' do
+          expect(content).to include e.teaser
+        end
       end
       it 'returns a description' do
         expect(subject.fb_description).to include 'og:description'

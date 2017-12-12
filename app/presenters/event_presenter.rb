@@ -36,7 +36,7 @@ class EventPresenter
   end
 
   def teaser
-    truncate(@object.short_description, length: 450, separator: ' ')
+    truncate(@object.short_description, length: 200, separator: ' ')
   end
 
   def more_description
