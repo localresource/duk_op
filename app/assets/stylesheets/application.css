@@ -479,6 +479,7 @@ input[type="file"] {
 .create-form__select-list {
   height: 100px;
   overflow-y: auto;
+  border: 1px solid #ddd;
 }
 
 .create-form__select-list input {
