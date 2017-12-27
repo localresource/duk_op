@@ -55,30 +55,4 @@ class Calendar
     end
     categories.sort_by(&:last).reverse
   end
-
-  # Based on the dates of the events given
-  # by the current_events method, sort them into
-  # Day objects. If an event date is already present,
-  # add it to the events for that day. Otherwise,
-  # create a new Day object
-  def self.arrange(events)
-    days = {}
-    in_progress = EventContainer.new
-    events.each do |e|
-      # if event has a start time < now
-      # add to current event container
-      if e.in_progress?
-        in_progress.add_event(e)
-      else
-        start_date = e.start_time.to_date
-        if days.has_key? start_date
-          days[start_date].add_event(e)
-        else
-          d = Day.new(e)
-          days.store(d.date, d)
-        end
-      end
-    end
-    [in_progress, days]
-  end
 end

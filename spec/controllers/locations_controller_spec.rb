@@ -21,10 +21,10 @@ describe LocationsController do
       get :show, params: { id: @location }
       expect(assigns(:location)).to eq @location
     end
-    it 'includes in progress events in a calendar' do
+    it 'includes events in a calendar' do
       get :show, params: { id: @location }
       expect(assigns(:calendar)).to be_a Calendar
-      expect(assigns(:calendar).in_progress).to include @event
+      expect(assigns(:calendar).events).to include @event
     end
   end
 
