@@ -27,7 +27,7 @@
         <div>
             <div id="selectList" class="create-form__select-list">
                 <% Category.all.each do |c| %>
-                    <%= check_box_tag :category, c.id, false, id: c.id %>
+                    <%= f.check_box(:category_ids, {:multiple => true, :id => c.id}, c.id, false) %>
                     <%= label_tag c.id, c.danish %>
                 <% end %>
             </div>
