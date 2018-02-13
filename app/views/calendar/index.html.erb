@@ -1,3 +1,12 @@
+<% content_for :meta_tags do %>
+    <meta property="og:url" content="https://www.dukop.dk/">
+    <meta property="og:title" content="Duk dig ikke - Duk Op!">
+    <meta property="og:description" content="DukOp er vores fælles guide til, hvad der sker i København og omegn, hvad enten du leder efter demonstrationer, koncerter, fester, møder, folkekøkkener, havedage, workshops, kunst- og filmfremvisninger, mv..">
+    <meta property="og:image" content="https://www.dukop.dk<%= image_path('social_media.jpg') %>">
+    <meta property="og:site_name" content="Duk Op">
+    <meta property="og:locale" content="da_DK">
+<% end %>
+
 <% @calendar.highlights.each do |event| %>
     <%= present(event).card_view %>
 <% end %>

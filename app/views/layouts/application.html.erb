@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <title><%= page_title %></title>
 <meta name="viewport" content="width=device-width, minimum-scale=1.0,initial-scale=1.0" />
+<!-- Shortcut icons (favicon) -->
+<link rel="shortcut icon" href="<%= image_path('favicon.png') %>"> 
+<link rel="apple-touch-icon" href="<%= image_path('favicon.png') %>"> 
+
 <%= content_for :meta_tags %>
 <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 <%= csrf_meta_tags %>
