@@ -5,6 +5,10 @@
     <meta property="og:image" content="https://www.dukop.dk<%= image_path('social_media.jpg') %>">
     <meta property="og:site_name" content="Duk Op">
     <meta property="og:locale" content="da_DK">
+    
+    <!-- Shortcut icons (favicon) -->
+    <link rel="shortcut icon" href="<%= image_path('favicon.png') %>"> 
+    <link rel="apple-touch-icon" href="<%= image_path('favicon.png') %>"> 
 <% end %>
 
 <% @posts.each do |post| %>
