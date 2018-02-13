@@ -22,6 +22,7 @@ class Event < ActiveRecord::Base
   scope :this_week, -> { where('start_time <= ?', DateTime.now + 6.days) }
   scope :unpublished, -> { future.where(published: false).ordered }
   scope :coming, -> { future.published.ordered }
+  scope :coming_today, -> { where('start_time >= ?', DateTime.now.to_date) }
 
   def must_be_valid_duration
     return unless end_time.present? && start_time.present?
@@ -130,11 +131,10 @@ class Event < ActiveRecord::Base
 
   # The repeating events that are occurring this week
   def self.repeating_this_week
-    self.coming
-      .in_series
+    self.in_series
       .published
       .this_week
-      .not_started
+      .coming_today
       .ordered
   end
 
