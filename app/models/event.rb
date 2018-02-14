@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
   scope :ordered, -> { order('events.start_time') }
   scope :in_series, -> { where('event_series_id > 0') }
   scope :not_started, -> { where('start_time >= ?', DateTime.now) }
-  scope :this_week, -> { where('start_time <= ?', DateTime.now + 6.days) }
+  scope :this_week, -> { where('start_time < ?', DateTime.now.to_date + 7.days) }
   scope :unpublished, -> { future.where(published: false).ordered }
   scope :coming, -> { future.published.ordered }
   scope :coming_today, -> { where('start_time >= ?', DateTime.now.to_date) }
