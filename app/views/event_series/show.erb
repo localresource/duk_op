@@ -4,6 +4,9 @@
   <h4>
     <%= link_to(@event_series.location.full_address, location_path(@event_series.location)) %>
   </h4>
+  <p>
+  <%= "#{t('events.event.posted_by')} #{link_to(username(@event_series.user), @event_series.user)  if @event_series.user}".html_safe %>
+  </p>
   <% if @event_series.price.present? %>
       <p><strong><%= t 'simple_form.labels.event.price' %>: </strong><%= @event_series.price %></p>
   <% end %>
