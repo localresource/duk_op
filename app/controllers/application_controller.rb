@@ -26,10 +26,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  ADDITIONAL_AHOY_FILTERS = [ :blank_file, :signature, :wet_signature, :file, :image, :logo, :picture ]
+  AHOY_PARAM_FILTER       = ActionDispatch::Http::ParameterFilter.new(ADDITIONAL_AHOY_FILTERS)
+
   def track
-    params_to_track = request.filtered_parameters.dup
-    params_to_track["event"].delete("picture") if !params_to_track["event"].nil? && !params_to_track["event"]["picture"].nil?
-    ahoy.track "#{controller_name}##{action_name}", params_to_track
+    ahoy_params = AHOY_PARAM_FILTER.filter(request.filtered_parameters)
+    ahoy.track "Processed #{controller_name}##{action_name}", ahoy_params
   end
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -44,4 +46,5 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: 'Only authorised users can edit events!'
     end
   end
+
 end
