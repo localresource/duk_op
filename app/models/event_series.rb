@@ -7,7 +7,7 @@ class EventSeries < ActiveRecord::Base
             :day_array, :rule, :start_date, :start_time, :end_time, :expiry, presence: true
 
   # TODO: this duplicates functionality in Event.rb so it should be refactored, but modularization caused constant load errors
-  has_attached_file :picture, styles: { original: '500x500>', thumb: '100x100>'}, default_url: 'images/:st'
+  has_attached_file :picture, styles: { original: '1500x1500>', large: '500x500>', thumb: '100x100>', some: '1000x500#' }, default_url: 'images/:st'
   validates_attachment_content_type :picture, :content_type => /\Aimage/
   validates_attachment_file_name :picture, matches: [/png\Z/i, /jpe?g\Z/i]
   validates_with AttachmentSizeValidator, attributes: :picture, less_than:  3.megabytes

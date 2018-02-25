@@ -8,11 +8,11 @@ class Event < ActiveRecord::Base
   belongs_to :event_series
   has_and_belongs_to_many :categories
   has_many :comments
-  has_attached_file :picture, styles: { original: '500x500>', thumb: '100x100>'}, default_url: 'images/:st'
+  has_attached_file :picture, styles: { original: '1500x1500>', large: '500x500>', thumb: '100x100>', some: '1000x500#' }, default_url: 'images/:st'
 
   validates_attachment_content_type :picture, :content_type => /\Aimage/
   validates_attachment_file_name :picture, matches: [/png\Z/i, /jpe?g\Z/i]
-  validates_with AttachmentSizeValidator, attributes: :picture, less_than:  3.megabytes
+  validates_with AttachmentSizeValidator, attributes: :picture, less_than:  5.megabytes
 
   scope :published, -> { where(published: true) }
   scope :future, -> { where('events.end_time > ?', DateTime.now) }

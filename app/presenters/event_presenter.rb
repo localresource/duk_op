@@ -55,7 +55,7 @@ class EventPresenter
 
   def fb_image
     if @object.best_picture.present?
-      fb_tag('image', asset_url(@object.best_picture.url(:original)))
+      fb_tag('image', asset_url(@object.best_picture.url(:some)))
     else
       ''
     end
