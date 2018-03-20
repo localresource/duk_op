@@ -54,6 +54,8 @@ class EventPresenter
     tags << fb_title
     tags << fb_description
     tags << fb_image
+    tags << fb_image_width
+    tags << fb_image_height
     tags << fb_site_name
     tags << fb_locale
     tags.join("\n").html_safe
@@ -99,6 +101,22 @@ class EventPresenter
 
   def picture_tag
     image_tag(@object.best_picture, alt: '') if @object.best_picture.present?
+  end
+
+  def fb_image_width
+    if @object.best_picture.present?
+      fb_tag('image:width', '1000')
+    else
+      ''
+    end
+  end
+
+  def fb_image_height
+    if @object.best_picture.present?
+      fb_tag('image:height', '500')
+    else
+      ''
+    end
   end
 
   def date_short
