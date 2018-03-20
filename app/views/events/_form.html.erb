@@ -9,7 +9,7 @@
     <div class="create-form__row">
         <%= f.label :picture, class: 'create-form__label' %>
         <div>
-          <%= label_tag 'uploadFile', 'Upload file', class: 'create-form__file' %>
+          <%= label_tag 'uploadFile', 'Upload file', id: 'uploadFileLabel', class: 'create-form__file' %>
           <%= f.file_field :picture, id: 'uploadFile' %>
           <div class="create-form__info">
               Only PNGs or JPEGs CHANGEME....
@@ -33,12 +33,32 @@
             </div>
         </div>
     </div>
-    <div class="create-form__row">
+    <%= f.fields_for :location do |l| %>
+      <div class="create-form__row">
         <%= f.label :location, class: 'create-form__label' %>
         <div class="create-form__inputs">
-            <%= f.text_field :location, class: 'create-form__input' %>
+            <%= l.text_field :name, class: 'create-form__input', list: 'locations' %>
+            <datalist id="locations">
+              <% Location.all.each do |location| %>
+                <option data-street_address="<%= location.street_address %>" data-postcode="<%= location.postcode %>" data-town="<%= location.town %>" value-uppercase="<%= location.name.upcase %>" value="<%= location.name %>" label="<%= "#{location.street_address}, #{location.postcode} #{location.town}" %>" />
+              <% end %>
+            </datalist>
         </div>
-    </div>
+      </div>
+      <div class="create-form__row">
+        <%= f.label "Address", class: 'create-form__label' %>
+        <div class="create-form__inputs">
+          <%= l.text_field :street_address, class: 'create-form__input' %>
+        </div>
+      </div>
+      <div class="create-form__row">
+        <%= f.label "Zipcode/Town", class: 'create-form__label' %>
+        <div class="create-form__inputs">
+          <%= l.text_field :postcode, class: 'create-form__input__postcode' %>
+          <%= l.text_field :town, class: 'create-form__input__town' %>
+        </div>
+      </div>
+    <% end %>
     <div class="create-form__row">
         <%= label_tag '', 'Tidspunkt', class: 'create-form__label' %>
         <div>

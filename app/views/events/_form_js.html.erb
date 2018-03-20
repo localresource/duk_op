@@ -1,22 +1,22 @@
 <script>
-  var selectList = document.getElementById('event_category_ids')
-  selectList.addEventListener('change', function(e) {
-    document.forms.createForm.selectList.forEach(function(item) {
-      if (item.checked) {
-        console.log(item.value);
-      }
-    })
-  });
-
-
-  var recurring = document.getElementById('recurring')
-  recurring.addEventListener('change', function(e) {
-    if (e.target.checked) {
-      document.getElementById('recurringForm').style.display = 'block'
-      document.getElementById('timeInput').style.display = 'none'
+  var locationName = document.getElementById('event_location_name');
+  locationName.addEventListener('input', function(e) {
+    var selectedOptions = document.querySelectorAll("#locations option[value-uppercase='"+e.target.value.toUpperCase()+"']");
+    if (selectedOptions.length > 0) {
+      var selectedOption = selectedOptions[0];
+      document.getElementById("event_location_street_address").value = selectedOption.dataset.street_address;
+      document.getElementById("event_location_street_address").disabled = true;
+      document.getElementById("event_location_postcode").value = selectedOption.dataset.postcode;
+      document.getElementById("event_location_postcode").disabled = true;
+      document.getElementById("event_location_town").value = selectedOption.dataset.town;
+      document.getElementById("event_location_town").disabled = true;
     } else {
-      document.getElementById('recurringForm').style.display = 'none'
-      document.getElementById('timeInput').style.display = 'block'
+      document.getElementById("event_location_street_address").value = "";
+      document.getElementById("event_location_street_address").disabled = false;
+      document.getElementById("event_location_postcode").value = "";
+      document.getElementById("event_location_postcode").disabled = false;
+      document.getElementById("event_location_town").value = "";
+      document.getElementById("event_location_town").disabled = false;
     }
   });
 
@@ -32,7 +32,7 @@
   });
 
 
-  var uploadFile = document.getElementById('js_button_text')
+  var uploadFile = document.getElementById('uploadFile')
   uploadFile.addEventListener('change', function(e) {
     var file = e.target.value;
     var filePath = e.target.value.split("\\");
