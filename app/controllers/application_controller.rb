@@ -27,7 +27,9 @@ class ApplicationController < ActionController::Base
   protected
 
   def track
-    ahoy.track "#{controller_name}##{action_name}", request.filtered_parameters
+    params_to_track = request.filtered_parameters.dup
+    params_to_track["event"].delete("picture") if !params_to_track["event"].nil? && !params_to_track["event"]["picture"].nil?
+    ahoy.track "#{controller_name}##{action_name}", params_to_track
   end
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
