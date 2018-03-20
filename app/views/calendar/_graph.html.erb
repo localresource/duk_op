@@ -1,10 +1,15 @@
-    <h1 class="title title--space">Det sker <span class="title__bold">også i dag</span></h1>
+    <h1 class="title title--space">Det sker <span class="title__bold">også i dag </span></h1>
     <div class="timeline">
-        <div class="timeline__event timeline__event--right" data-text="sdfjlsdf"></div>
-        <div class="timeline__event timeline__event--left" data-text="sdfjls sdfsdf sdf sdf df" style="margin-left: 55%; width: 33%;"></div>
-        <div class="timeline__event timeline__event--color1 timeline__event--left" data-text="Vigtigt møde" style="margin-left: 55%;"></div>
-        <div class="timeline__event timeline__event--color2" style="margin-left: 25%; width: 33%;">test 2</div>
-        <div class="timeline__event timeline__event--color3 timeline__event--right" style="margin-left: 75%;" data-text="Duk dig ikke"></div>
+      <% Event.repeating_this_week.each do |item|  %>
+        <% offset = (item.start_time.strftime('%k.%M').to_f - 8.0) / 16 * 100  %>
+        <% duration = (item.end_time.strftime('%k.%M').to_f - item.start_time.strftime('%k.%M').to_f) / 16 * 100  %>
+        <% extra_class = (duration < 20 && offset < 50) ? ['timeline__event--right'] : [] %>
+        <% extra_class << ' timeline__event--left' if (duration < 20 && offset > 50) %>
+        <% color_class = 'timeline__event--color' + rand(1...4).to_s %>
+        <%= content_tag(:div, class: "timeline__event #{color_class} #{extra_class.join}", data: { text: item.title }, style: "width: #{duration}%; margin-left: #{offset}%") do %>
+          <%= item.title.truncate(25) unless extra_class.any? %>
+      <% end %>
+      <% end %>
         <div class="timeline__scale">
             <div class="timeline__min">
                 08:00

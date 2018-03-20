@@ -19,6 +19,10 @@ class EventPresenter
     link_to(@object.location.display_name, @object.location)
   end
 
+  def locationText
+    @object.location.display_name
+  end
+
   def time
     @object.start_time.strftime('%H:%M')
   end
@@ -36,7 +40,7 @@ class EventPresenter
   end
 
   def teaser
-    truncate(@object.short_description, length: 200, separator: ' ')
+    truncate(@object.short_description, length: 150, separator: ' ')
   end
 
   def more_description

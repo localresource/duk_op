@@ -8,41 +8,37 @@
 <% end %>
 
 <% @calendar.highlights.each do |event| %>
-    <%= present(event).card_view %>
+  <%= present(event).card_view %>
 <% end %>
 
 <div class="page-container">
-    <%= render partial: 'graph' %>
+  <%= render partial: 'graph' %>
 </div>
 <div class="page-container">
-        <div class="table">
-            <% @sorted.each do |day, events| %>
-          <div class="table__day table__day--1">
-            <div class="table__header">
-                <%= I18n.localize(day, format: :header) %>
-            </div>
-                <% events.each do |event| %>
-                    <% presenter = present(event) %>
-                <div class="table__event">
-                  <div class="table__time">
-                      <%= presenter.time %>
-                  </div>
-                    <div class="table__title">
-                        <%= presenter.title %>
-                    </div>
-                    <div class="table__place">
-                        <%= presenter.location %>
-                    </div>
-                </div>
-                <% end %>
-            <% end %>
-
-                </div>
-              </div>
+  <div class="table">
+    <% @sorted.each do |day, events, index| %>
+      <div class="table__day">
+        <div class="table__header">
+          <%= I18n.localize(day, format: :full) %>
         </div>
-      </div>
-<div class="overlay" id="js-overlay">
-</div>
+        <% events.each do |event| %>
+          <% presenter = present(event) %>
+            <a href="<%= url_for(event) %>" class="table__event">
+              <div class="table__time">
+                <%= presenter.time %>
+              </div>
+              <div class="table__title">
+                <%= presenter.title %>
+              </div>
+              <div class="table__place">
+                <%= presenter.locationText %>
+              </div>
+            </a>
+          <% end %>
+          </div>
+        <% end %>
+    </div>
   </div>
+<div class="overlay" id="js-overlay"></div>
 
-  <%= render partial: 'index_js' %>
+<%= render partial: 'index_js' %>

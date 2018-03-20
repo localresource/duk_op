@@ -19,6 +19,8 @@
   margin-bottom: 10px;
   font-style: italic;
   width: 30px;
+  white-space: nowrap;
+  // overflow-y: hidden;
 }
 
 .timeline__event--color1 {
@@ -31,6 +33,12 @@
 
 .timeline__event--color3 {
   background: #42767F;
+}
+
+.timeline__event--left,
+.timeline__event--right {
+  // overflow: auto;
+
 }
 
 .timeline__event--left::before {

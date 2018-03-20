@@ -3,11 +3,11 @@
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
 }
 
-.table__day--1 {
+.table__day {
   background-color: rgba(236, 236, 222,.2)
 }
 
-.table__day--2 {
+.table__day:nth-child(odd) {
   background-color: rgba(177, 196, 181,.2)
 }
 
@@ -19,6 +19,8 @@
 .table__event {
   display: flex;
   border-bottom: 1px solid #ddd;
+  color: inherit;
+  text-decoration: none;
 }
 
 .table__event:hover {

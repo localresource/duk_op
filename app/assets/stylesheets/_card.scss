@@ -9,7 +9,7 @@
   margin: 20px auto;
   max-width: 900px;
   transition: transform .5s;
-  
+
 }
 
 .card.js-active {
@@ -42,12 +42,14 @@
 
 .card__media {
   display: block;
+  flex: 1;
   background-color: rgb(236, 236, 222);
 }
 
 .card__media img {
   display: block;
   min-width: 100%;
+
 }
 
 .card__text {
@@ -99,6 +101,7 @@
   font-size: 2em;
   margin: 20px 0 10px 0;
   letter-spacing: -1px;
+  line-height: 1em;
 }
 
 .card__more {

@@ -8,8 +8,8 @@
                 <h2><%= @location.address %></h2>
             </div>
             <div class="card__main">
-                <p><%= auto_link(simple_format(@location.try(:description))) %></p>
-                <p><%= auto_link(@location.try(:link)) %></Ilsp>
+                <div><%= auto_link(simple_format(@location.try(:description))) %></div>
+                <div><%= auto_link(@location.try(:link)) %></div>
                 <% if current_user && current_user.can_edit?(@location) %>
                     <%= link_to t('.edit_location'), edit_location_path %>
                     <%= link_to t('.delete_location'), location_path, method: :delete, data: { confirm: 'Are you sure?' } %>

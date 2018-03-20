@@ -1,6 +1,7 @@
+
 <% content_for :meta_tags do %>
   <%= @event_presenter.fb_tags  %>
 <% end %>
 <%= schema_json(@event) %>
 <% no_index_rule if @event.unpublished? %>
-<%= render partial: 'show_card', locals: { presenter: @event_presenter } %>
+<%= render partial: 'show_card', locals: { presenter: @event_presenter, modifier: 'card--static' } %>

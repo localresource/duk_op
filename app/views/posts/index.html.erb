@@ -1,13 +1,27 @@
-<h1><%= t(:news) %></h1>
+<div class="card card--static">
+  <div class="card__text">
+    <h1 class="title"><%= t(:news) %></h1>
 
-<% @posts.each do |post| %>
-  <h2><%= link_to(post.title, post) %></h2>
-  <p class="text text-muted"><%= format_datetime(post.created_at) %>
-  <p><%= truncate(post.body, length: 30, separator: ' ') %>
-<% end %>
+    <% @posts.each do |post| %>
 
-<br>
+      <div class="news__link">
+        <div class="news__date news__date--title">
+          <%= format_datetime(post.created_at) %>
+        </div>
+        <div class="news__content">
+          <h2 class="title title__bold"><%= link_to(post.title, post) %></h2>
+          <%= truncate(post.body, length: 130, separator: ' ') %>
+        </div>
+      </div>
 
-<% if current_user.present? && current_user.is_admin? %>
-  <%= link_to 'New Post', new_post_path %>
-<% end %>
+    <% end %>
+
+    <br>
+
+    <% if current_user.present? && current_user.is_admin? %>
+      <%= link_to 'New Post', new_post_path %>
+    <% end %>
+  </div>
+
+
+</div>

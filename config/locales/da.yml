@@ -28,6 +28,7 @@ da:
   date:
     formats:
       header: ! '%a d. %e. %b'
+      full: ! '%A d. %e. %B'
       brief: ! '%e %b'
   time:
     formats:

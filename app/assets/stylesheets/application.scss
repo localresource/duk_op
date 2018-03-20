@@ -37,6 +37,12 @@
   color: rgba(0, 0, 0, 0.7);
   margin-bottom: 10px;
   letter-spacing: -1px;
+  line-height: 1.2em;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
 }
 
 .title--space {
@@ -51,6 +57,8 @@
   color: inherit;
   display: flex;
   text-decoration: none;
+  margin-bottom: 10px;
+  padding: 5px;
 }
 
 .news__link:hover {
@@ -60,7 +68,28 @@
 .news__date {
   color: #42767F;
   padding-right: 10px;
+  flex: 0 0 75px;
+  text-align: right;
+
+  &--title {
+    flex: 0 0 205px;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    line-height: 1.2em;
+  }
 }
+
+.news__content {
+  flex: 1;
+}
+
+.news__title {
+  flex: 1;
+}
+
 
 .footer {
   margin-top: 40px;
