@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.2.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.1'
+gem 'rails', '5.1.4'
 
 gem 'paperclip', '~> 4.2'
 gem 'lograge'
@@ -10,7 +10,7 @@ gem 'rails_autolink'
 
 group :production do
   gem 'pg'
-  gem 'rmagick', platforms: [:ruby]
+  # gem 'rmagick', platforms: [:ruby]
   gem 'unicorn', platforms: [:ruby]
   gem 'unicorn-worker-killer', platforms: [:ruby]
 end
@@ -22,7 +22,7 @@ gem 'sass-rails', '~> 5.0.6'
 gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
 
 gem 'high_voltage', '>= 3.0.0'
 
