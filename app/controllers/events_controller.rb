@@ -96,14 +96,28 @@ class EventsController < ApplicationController
   end
 
   def user_params
+    (params[:event][:category_ids] || []).uniq!
+    params[:event][:event_series][:days] = params[:event_series][:day_array].select(&:present?).join(',') if params[:event_series].present? && params[:event_series][:day_array].present?
+    start_time_string = "#{(params[:start_time_yyyy_mm_dd] || []).first} #{(params[:start_time_hh_mm_ss] || []).first}"
+    end_time_string = "#{(params[:end_time_yyyy_mm_dd] || []).first} #{(params[:end_time_hh_mm_ss] || []).first}"
+    if /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.match(start_time_string)
+      start_time_string= start_time_string + ":00"
+    end
+    if /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.match(start_time_string)
+      params[:event][:start_time] = DateTime.strptime(start_time_string, "%Y-%m-%d %H:%M:%S")
+    end
+    if /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.match(end_time_string)
+      end_time_string= end_time_string + ":00"
+    end
+    if /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.match(end_time_string)
+      params[:event][:end_time] = DateTime.strptime(end_time_string, "%Y-%m-%d %H:%M:%S")
+    end
+    params[:event].delete(:featured) unless current_user.is_admin? # only admins can update featured value
     params.require(:event).permit(:title, :short_description, :long_description,
                                  :start_time, :end_time,  :location_id, :comments_enabled,
                                  :price, :cancelled, :link, :picture, :featured, :published,
+                                 # TODO event_series fix start_time?
                                  category_ids: [], event_series: [[:rule, :start_date, 
-                                 :start_time, :expiry, :end_time, day_array: []]]).tap do |list|
-      list[:category_ids].uniq!
-      list[:event_series][:days] = list[:event_series][:day_array].select(&:present?).join(',') if list[:event_series].present? && list[:event_series][:day_array].present?
-      list.delete(:featured) unless current_user.is_admin? # only admins can update featured value
-    end
+                                 :start_time, :expiry, :end_time, day_array: []]])
   end
 end
