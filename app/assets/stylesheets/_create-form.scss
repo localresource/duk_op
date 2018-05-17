@@ -138,3 +138,6 @@ input[type="file"] {
   width: 79.45%;
   border: 1px solid #ddd;
 }
+.field_with_errors {
+    input, textarea { box-shadow: 0 0 3px #CC0000; margin: 10px }
+}

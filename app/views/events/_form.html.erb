@@ -1,3 +1,10 @@
+<% if @event.errors.any? %>
+    <ul>
+    <% @event.errors.messages.each do |key, val| %>
+        <%= content_tag(:li, "#{key}: #{val.join(', ')}") %>
+    <% end %>
+    </ul>
+<% end %>
 <%= form_for @event, html: { multipart: true, name: 'createForm' } do |f| %>
 
     <div class="create-form__row">
@@ -69,7 +76,8 @@
                           <%= f.label :start_time, class: 'create-form__label' %>
                         </div>
                         <div>
-                            <%= time_field("start_time_hh_mm_ss", "", {step: 15}) %>
+                            <% round_time_start = "#{Time.now.hour}:00" %>
+                            <%= time_field("start_time_hh_mm_ss", "", { value: round_time_start }) %>
                             <%= date_field("start_time_yyyy_mm_dd", "") %>
                         </div>
                     </div>
@@ -78,7 +86,8 @@
                           <%= f.label :end_time, class: 'create-form__label' %>
                         </div>
                         <div>
-                            <%= time_field("end_time_hh_mm_ss", "", {step: 15}) %>
+                            <% round_time_end = "#{Time.now.hour}:30" %>
+                            <%= time_field("end_time_hh_mm_ss", "", { value: round_time_end }) %>
                             <%= date_field("end_time_yyyy_mm_dd", "") %>
                         </div>
                     </div>
