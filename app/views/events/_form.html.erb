@@ -1,3 +1,10 @@
+<% if @event.errors.any? %>
+    <ul>
+    <% @event.errors.messages.each do |key, val| %>
+        <%= content_tag(:li, "#{key}: #{val.join(', ')}") %>
+    <% end %>
+    </ul>
+<% end %>
 <%= form_for @event, html: { multipart: true, name: 'createForm' } do |f| %>
 
     <div class="create-form__row">
@@ -9,7 +16,7 @@
     <div class="create-form__row">
         <%= f.label :picture, class: 'create-form__label' %>
         <div>
-          <%= label_tag 'uploadFile', 'Upload file', class: 'create-form__file' %>
+          <%= label_tag 'uploadFile', 'Upload file', id: 'uploadFileLabel', class: 'create-form__file' %>
           <%= f.file_field :picture, id: 'uploadFile' %>
           <div class="create-form__info">
               Only PNGs or JPEGs CHANGEME....
@@ -27,18 +34,38 @@
         <div>
             <div id="selectList" class="create-form__select-list">
                 <% Category.all.each do |c| %>
-                    <%= check_box_tag :category, c.id, false, id: c.id %>
+                    <%= f.check_box(:category_ids, {:multiple => true, :id => c.id}, c.id, false) %>
                     <%= label_tag c.id, c.danish %>
                 <% end %>
             </div>
         </div>
     </div>
-    <div class="create-form__row">
+    <%= f.fields_for :location do |l| %>
+      <div class="create-form__row">
         <%= f.label :location, class: 'create-form__label' %>
         <div class="create-form__inputs">
-            <%= f.text_field :location, class: 'create-form__input' %>
+            <%= l.text_field :name, class: 'create-form__input', list: 'locations' %>
+            <datalist id="locations">
+              <% Location.all.each do |location| %>
+                <option data-street_address="<%= location.street_address %>" data-postcode="<%= location.postcode %>" data-town="<%= location.town %>" value-uppercase="<%= location.name.upcase %>" value="<%= location.name %>" label="<%= "#{location.street_address}, #{location.postcode} #{location.town}" %>" />
+              <% end %>
+            </datalist>
         </div>
-    </div>
+      </div>
+      <div class="create-form__row">
+        <%= f.label "Address", class: 'create-form__label' %>
+        <div class="create-form__inputs">
+          <%= l.text_field :street_address, class: 'create-form__input' %>
+        </div>
+      </div>
+      <div class="create-form__row">
+        <%= f.label "Zipcode/Town", class: 'create-form__label' %>
+        <div class="create-form__inputs">
+          <%= l.text_field :postcode, class: 'create-form__input__postcode' %>
+          <%= l.text_field :town, class: 'create-form__input__town' %>
+        </div>
+      </div>
+    <% end %>
     <div class="create-form__row">
         <%= label_tag '', 'Tidspunkt', class: 'create-form__label' %>
         <div>
@@ -49,8 +76,9 @@
                           <%= f.label :start_time, class: 'create-form__label' %>
                         </div>
                         <div>
-                            <%= f.time_field :start_time, step: 15 %>
-                            <%= f.date_field :start_time %>
+                            <% round_time_start = "#{Time.now.hour}:00" %>
+                            <%= time_field("start_time_hh_mm_ss", "", { value: round_time_start }) %>
+                            <%= date_field("start_time_yyyy_mm_dd", "") %>
                         </div>
                     </div>
                     <div>
@@ -58,8 +86,9 @@
                           <%= f.label :end_time, class: 'create-form__label' %>
                         </div>
                         <div>
-                            <%= f.time_field :end_time, step: 15 %>
-                            <%= f.date_field :end_time %>
+                            <% round_time_end = "#{Time.now.hour}:30" %>
+                            <%= time_field("end_time_hh_mm_ss", "", { value: round_time_end }) %>
+                            <%= date_field("end_time_yyyy_mm_dd", "") %>
                         </div>
                     </div>
                 </div>
