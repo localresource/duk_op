@@ -27,6 +27,15 @@ class EventsController < ApplicationController
       notice = I18n.t('event_series.created', link: url_for(@event_series), name: @event_series.name, num_events: @event_series.coming_events.size)
     else
       @event = Event.new(event_params.except('event_series'))
+
+
+      #
+      # TODO: REMOVE WHEN LOCATION USER INPUT IS HANDLED
+      #
+      ungdomshuset = Location.where(:name => "Ungdomshuset").first
+      @event.location_id = ungdomshuset.id if !ungdomshuset.nil?
+
+
       saved = @event.save
       notice = I18n.t('events.event_created', link: url_for(@event), name: @event.name)
     end
