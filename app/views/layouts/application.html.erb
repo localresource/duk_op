@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html>
+<head>
 <title><%= page_title %></title>
 <meta name="viewport" content="width=device-width, minimum-scale=1.0,initial-scale=1.0" />
 <!-- Shortcut icons (favicon) -->
@@ -8,6 +10,8 @@
 <%= content_for :meta_tags %>
 <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 <%= csrf_meta_tags %>
+</head>
+<body>
 <div class="lock-body" id="js-lock-body">
 
     <header>
@@ -58,3 +62,5 @@
             </div>
         </div>
     </footer>
+</body>
+</html>
