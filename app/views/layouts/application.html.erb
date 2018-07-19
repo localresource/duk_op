@@ -28,7 +28,8 @@
                     <div></div>
                 </div>
                 <%= link_to t('.new'), new_event_path, class: 'header__link' %>
-                <%= link_to t('.login'), user_session_path, class: 'header__link' %>
+                <%= link_to(t('.login'), user_session_path, class: 'header__link') if !user_signed_in? %>
+                <%= link_to(t('.logout'), destroy_user_session_path, class: 'header__link') if user_signed_in? %>
 
             </div>
         </div>
