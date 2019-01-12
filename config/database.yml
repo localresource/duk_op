@@ -5,9 +5,10 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  database: det_sker
-  username: det_sker
-  password: det_sker
+  host: my-dukop-db
+  database: dukop
+  username: admin
+  password: admin
   pool: 5
   timeout: 5000
 
@@ -16,9 +17,10 @@ development:
 # Do not set this db to the same as development or production.
 test: &test
   adapter: postgresql
-  database: test
-  user: ENV['PG_USER']
-  password: ENV['PG_PASSWORD']
+  host: my-dukop-db-test
+  database: dukop
+  user: admin
+  password: admin
   pool: 5
   timeout: 5000
 

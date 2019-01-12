@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require ahoy
 //= require jquery_ujs
 //= require bootstrap.min
 //= require bootstrap-select.min

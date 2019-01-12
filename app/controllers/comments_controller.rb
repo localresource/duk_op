@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to event_path(comment_params[:event_id]), notice: I18n.t('comments.created_message')}
         format.json { render json: @comment, status: :created }
       else
-        format.html { redirect_to root_path, notice: "Comment was not created: #{@comment.errors.inspect}" }
+        format.html { redirect_to root_path, notice: "Comment was not created: #{@comment.errors.full_messages.join(". ")}" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end

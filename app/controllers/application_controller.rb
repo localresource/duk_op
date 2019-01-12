@@ -20,12 +20,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  ADDITIONAL_AHOY_FILTERS = [ :blank_file, :signature, :wet_signature, :file, :image, :logo, :picture ]
-  AHOY_PARAM_FILTER       = ActionDispatch::Http::ParameterFilter.new(ADDITIONAL_AHOY_FILTERS)
+  #ADDITIONAL_AHOY_FILTERS = [ :blank_file, :signature, :wet_signature, :file, :image, :logo, :picture ]
+  #AHOY_PARAM_FILTER       = ActionDispatch::Http::ParameterFilter.new(ADDITIONAL_AHOY_FILTERS)
 
   def track
-    ahoy_params = AHOY_PARAM_FILTER.filter(request.filtered_parameters)
-    ahoy.track "Processed #{controller_name}##{action_name}", ahoy_params
+    #ahoy_params = AHOY_PARAM_FILTER.filter(request.filtered_parameters)
+    #ahoy.track "Processed #{controller_name}##{action_name}", ahoy_params
   end
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
